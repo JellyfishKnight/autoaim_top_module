@@ -1,0 +1,10 @@
+camera: mv
+
+odom2camera:
+  xyz: "\"0.10 0.0  0.05\""
+  rpy: "\"0.0  0.0  0.0\""
+
+detector_log_level: INFO
+predictor_log_level: INFO
+autoaim_bridge_log_level: INFO
+

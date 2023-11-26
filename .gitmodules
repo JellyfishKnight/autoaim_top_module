@@ -1,0 +1,9 @@
+[submodule "autoaim_bridge"]
+	path = autoaim_bridge
+	url = git@e.coding.net:swjtuhelios/cv/autoaim_bridge.git
+[submodule "ros2_mindvision_camera"]
+	path = ros2_mindvision_camera
+	url = git@e.coding.net:swjtuhelios/cv/ros2_mindvision_camera.git
+[submodule "helios_autoaim"]
+	path = helios_autoaim
+	url = git@e.coding.net:swjtuhelios/cv/helios_autoaim.git
