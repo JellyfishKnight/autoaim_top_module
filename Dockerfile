@@ -44,7 +44,8 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     rm -rf /var/lib/apt/lists/*
 
 # build
-RUN . /opt/ros/humble/setup.sh && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+RUN  touch src/helios_autoaim/autoaim_fire_controller/COLCON_IGNORE && \
+     . /opt/ros/humble/setup.sh && colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 # setup .zshrc
 RUN echo 'export TERM=xterm-256color\n\
