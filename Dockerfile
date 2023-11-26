@@ -16,12 +16,12 @@ COPY .ssh/id_rsa /root/.ssh/id_rsa
 COPY .ssh/id_rsa.pub /root/.ssh/id_rsa.pub
 RUN apt-get install -y openssh-client && \
     chmod 600 /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa.pub && \
-    git config --global user.name ${GIT_USERNAME} && \
-    git config --global user.email ${GIT_EMAIL} && \
-    eval $(ssh-agent -s) && ssh-add /root/.ssh/id_rsa
+    eval $(ssh-agent -s) && ssh-add /root/.ssh/id_rsa && \
+    echo "Host e.coding.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 # clone projects and config
-RUN echo "Host e.coding.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config && \
+RUN git config --global user.name ${GIT_USERNAME} && \
+    git config --global user.email ${GIT_EMAIL} && \
     git clone git@e.coding.net:swjtuhelios/cv/autoaim_top_module.git --recursive && \
     mv autoaim_top_module src && cd src && \
     git submodule update --init --recursive
