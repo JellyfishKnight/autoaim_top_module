@@ -40,7 +40,7 @@ if [[ -n $(git status --porcelain) ]]; then
     read -p "Enter commit message for top submodule: " commit_message
     git add .
     git commit -m "$commit_message"
-    git push
+    git push origin master
 else
     echo "No changes in top submodule"
 fi
