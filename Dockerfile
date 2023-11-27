@@ -57,7 +57,7 @@ RUN echo 'export TERM=xterm-256color\n\
 
 # source entrypoint setup
 RUN sed --in-place --expression \
-      '$isource "/HeliosRS_ws/install/setup.bash"' \
+      '$isource "/autoaim_ws/install/setup.bash"' \
       /ros_entrypoint.sh
 
 
