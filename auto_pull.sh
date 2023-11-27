@@ -19,10 +19,12 @@ for submodule in $submodules; do
     (
         cd "$submodule"
         # 执行 git pull，注意：这里假设你的凭据已经被缓存
-        git pull origin master 
+        git checkout master
+        git pull
     )
 done
 
+git checkout master
 git pull origin master 
 
 echo "All submodules updated!"

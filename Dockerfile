@@ -24,7 +24,9 @@ RUN git config --global user.name ${GIT_USERNAME} && \
     git config --global user.email ${GIT_EMAIL} && \
     git clone git@e.coding.net:swjtuhelios/cv/autoaim_top_module.git --recursive && \
     mv autoaim_top_module src && cd src && \
-    git submodule update --init --recursive
+    git submodule update --init --recursive && \
+    chmod +x ./auto_push.sh && chmod +x ./auto_pull.sh && \
+    ./auto_pull.sh
 
 # install dependencies and some tools
 RUN apt-get update && rosdep install --from-paths src --ignore-src -r -y && \
