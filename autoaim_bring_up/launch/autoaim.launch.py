@@ -2,7 +2,7 @@ import os
 import sys
 import yaml
 from ament_index_python.packages import get_package_share_directory
-sys.path.append(os.path.join(get_package_share_directory('helios_rs_bring_up'), 'launch'))
+sys.path.append(os.path.join(get_package_share_directory('autoaim_bring_up'), 'launch'))
 from launch.substitutions import Command
 
 def generate_launch_description():
@@ -12,10 +12,10 @@ def generate_launch_description():
     from launch import LaunchDescription
 
     launch_params = yaml.safe_load(open(os.path.join(
-        get_package_share_directory('helios_rs_bring_up'), 'config', 'autoaim', 'launch_params.yaml')))
+        get_package_share_directory('autoaim_bring_up'), 'config', 'launch_params.yaml')))
 
     robot_description = Command(['xacro ', os.path.join(
-        get_package_share_directory('helios_rs_bring_up'), 'descriptions', 'urdf', 'gimbal_description.urdf.xacro'),
+        get_package_share_directory('autoaim_bring_up'), 'descriptions', 'urdf', 'gimbal_description.urdf.xacro'),
         ' xyz:=', launch_params['odom2camera']['xyz'], ' rpy:=', launch_params['odom2camera']['rpy']])
 
     robot_state_publisher = Node(
@@ -26,7 +26,7 @@ def generate_launch_description():
     )
 
     node_params = os.path.join(
-        get_package_share_directory('helios_rs_bring_up'), 'config', 'autoaim', 'node_params.yaml')
+        get_package_share_directory('autoaim_bring_up'), 'config', 'node_params.yaml')
 
     tracker_node = Node(
         package='predictor_node',
@@ -114,9 +114,9 @@ def generate_launch_description():
     return LaunchDescription([
         robot_state_publisher,
         cam_detector,
-        # delay_autoaim_bridge_node,
+        delay_autoaim_bridge_node,
         delay_tracker_node,
-        node_tf2,
+        # node_tf2,
         # foxglove_bridge,
     ])
 
