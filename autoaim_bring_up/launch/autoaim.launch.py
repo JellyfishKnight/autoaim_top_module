@@ -31,7 +31,7 @@ def generate_launch_description():
     tracker_node = Node(
         package='predictor_node',
         executable='predictor_node_node',
-        name='predictor_node',
+        name='armor_predictor',
         output='both',
         emulate_tty=True,
         parameters=[node_params],
@@ -118,6 +118,5 @@ def generate_launch_description():
         delay_tracker_node,
         node_tf2,
         # foxglove_bridge,
-        node_tf2,
     ])
 
