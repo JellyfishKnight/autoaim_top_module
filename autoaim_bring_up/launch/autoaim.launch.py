@@ -117,6 +117,6 @@ def generate_launch_description():
         # delay_autoaim_bridge_node,
         delay_tracker_node,
         node_tf2,
-        # foxglove_bridge,
+        foxglove_bridge,
     ])
 
