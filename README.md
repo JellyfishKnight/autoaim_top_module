@@ -28,12 +28,13 @@
     docker run -it --name autoaim_devel \
         --privileged --network host \
         -v /dev:/dev -v $HOME/.ros:/root/.ros \
-        swjtuhelios-docker.pkg.coding.net/cv/rm_dev_docker/autoaim_deploy:lastest \
+        swjtuhelios-docker.pkg.coding.net/cv/rm_dev_docker/autoaim_deploy:runtime_v1 \
     # 构建运行容器(部署上场的时候用)
     docker run -it --name autoaim_runtime \
         --privileged --network host --restart always \
         -v /dev:/dev -v $HOME/.ros:/root/.ros \
-        swjtuhelios-docker.pkg.coding.net/cv/rm_dev_docker/autoaim_deploy:lastest \
+        swjtuhelios-docker.pkg.coding.net/cv/rm_dev_docker/autoaim_deploy:runtime_v1 \
+        ros2 launch autoaim_bring_up autoaim.launch.py
 
 ## 快速拉取远程更改
     cd autoaim_ws && \
