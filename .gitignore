@@ -1,0 +1,7 @@
+*/.cache
+.cache
+.cache/*
+.ssh
+*/.ssh
+.ssh/*
+
