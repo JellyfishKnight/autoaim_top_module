@@ -6,8 +6,8 @@
 /autoaim_bridge:
   ros__parameters:
     timestamp_offset: 0.006
-    device_name: /dev/ttyACM0
-    baud_rate: 115200
+    device_name: /dev/usb_serial
+    baud_rate: 921600
     flow_control: none
     parity: none
     stop_bits: "1"
@@ -15,7 +15,7 @@
   ros__parameters:
     debug: true
     detect_color: 0
-    binary_thres: 80
+    binary_thres: 100
     light.min_ratio: 0.1
     armor.min_light_ratio: 0.8
     classifier_threshold: 0.8

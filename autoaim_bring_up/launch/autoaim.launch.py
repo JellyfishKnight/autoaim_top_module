@@ -114,9 +114,9 @@ def generate_launch_description():
     return LaunchDescription([
         robot_state_publisher,
         cam_detector,
-        # delay_autoaim_bridge_node,
+        delay_autoaim_bridge_node,
         delay_tracker_node,
-        node_tf2,
+        # node_tf2,
         foxglove_bridge,
     ])
 
