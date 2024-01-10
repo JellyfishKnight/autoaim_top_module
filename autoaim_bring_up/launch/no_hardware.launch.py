@@ -2,7 +2,7 @@ import os
 import sys
 import yaml
 from ament_index_python.packages import get_package_share_directory
-sys.path.append(os.path.join(get_package_share_directory('helios_rs_bring_up'), 'launch'))
+sys.path.append(os.path.join(get_package_share_directory('autoaim_bring_up'), 'launch'))
 from launch.substitutions import Command
 
 
@@ -12,10 +12,10 @@ def generate_launch_description():
     from launch import LaunchDescription
 
     launch_params = yaml.safe_load(open(os.path.join(
-        get_package_share_directory('helios_rs_bring_up'), 'config', 'autoaim', 'launch_params.yaml')))
+        get_package_share_directory('autoaim_bring_up'), 'config', 'launch_params.yaml')))
 
     robot_description = Command(['xacro ', os.path.join(
-        get_package_share_directory('helios_rs_bring_up'), 'descriptions', 'urdf', 'gimbal_description.urdf.xacro'),
+        get_package_share_directory('autoaim_bring_up'), 'descriptions', 'urdf', 'gimbal_description.urdf.xacro'),
         ' xyz:=', launch_params['odom2camera']['xyz'], ' rpy:=', launch_params['odom2camera']['rpy']])
 
     robot_state_publisher = Node(
@@ -26,7 +26,17 @@ def generate_launch_description():
     )
 
     node_params = os.path.join(
-        get_package_share_directory('helios_rs_bring_up'), 'config', 'autoaim', 'node_params.yaml')
+        get_package_share_directory('autoaim_bring_up'), 'config', 'node_params.yaml')
+
+    camera_node = Node(
+        package='mindvision_camera',
+        executable='mindvision_camera_node',
+        name='camera_node',
+        output='both',
+        emulate_tty=True,
+        parameters=[node_params],
+    )
+
 
     tracker_node = Node(
         package='predictor_node',
@@ -37,7 +47,6 @@ def generate_launch_description():
         parameters=[node_params],
         ros_arguments=['--log-level', 'predictor_node:='+launch_params['predictor_log_level']],
     )
-
 
     detector_node = Node(
         package='detector_node',
@@ -62,11 +71,22 @@ def generate_launch_description():
         executable='foxglove_bridge'
     )
 
+    autoaim_debugger = Node(
+        package='autoaim_debugger',
+        executable='autoaim_debugger_node',
+        name='autoaim_debugger_node',
+        output='both',
+        emulate_tty=True,
+    )
+
+
     return LaunchDescription([
         robot_state_publisher,
+        camera_node,
         detector_node,
         tracker_node,
         node_tf2,
+        autoaim_debugger,
         foxglove_bridge,
     ])
 
