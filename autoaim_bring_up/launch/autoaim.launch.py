@@ -111,12 +111,21 @@ def generate_launch_description():
         arguments = ["0", "0", "0", "0", "0", "0", "odom", "gimbal_link"]
     )
 
+    autoaim_debugger = Node(
+        package='autoaim_debugger',
+        executable='autoaim_debugger_node',
+        name='autoaim_debugger_node',
+        output='both',
+        emulate_tty=True,
+    )
+
     return LaunchDescription([
         robot_state_publisher,
         cam_detector,
-        # delay_autoaim_bridge_node,
+        delay_autoaim_bridge_node,
+        autoaim_debugger,
         delay_tracker_node,
-        node_tf2,
+        # node_tf2,
         foxglove_bridge,
     ])
 
