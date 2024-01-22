@@ -8,31 +8,34 @@ RUN apt-get update && apt upgrade -y && \
 # create workspace and config git ssh key
 RUN mkdir -p /autoaim_ws
 WORKDIR /autoaim_ws/
+# Copy Project
+COPY . /autoaim_ws/src
 
-# config git ssh key
-ARG GIT_USERNAME GIT_EMAIL
-RUN mkdir -p /root/.ssh/
-COPY .ssh/id_rsa /root/.ssh/id_rsa
-COPY .ssh/id_rsa.pub /root/.ssh/id_rsa.pub
-RUN apt-get install -y openssh-client && \
-    chmod 600 /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa.pub && \
-    eval $(ssh-agent -s) && ssh-add /root/.ssh/id_rsa && \
-    echo "Host e.coding.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+# # config git ssh key
+# ARG GIT_USERNAME GIT_EMAIL
+# RUN mkdir -p /root/.ssh/
+# COPY .ssh/id_rsa /root/.ssh/id_rsa
+# COPY .ssh/id_rsa.pub /root/.ssh/id_rsa.pub
+# RUN apt-get install -y openssh-client && \
+#     chmod 600 /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsa.pub && \
+#     eval $(ssh-agent -s) && ssh-add /root/.ssh/id_rsa && \
+#     echo "Host e.coding.net\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
-# clone projects and config
-RUN git config --global user.name ${GIT_USERNAME} && \
-    git config --global user.email ${GIT_EMAIL} && \
-    git clone git@e.coding.net:swjtuhelios/cv/autoaim_top_module.git --recursive && \
-    mv autoaim_top_module src && cd src && \
-    git submodule update --init --recursive && \
-    chmod +x ./auto_push.sh && chmod +x ./auto_pull.sh && \
-    ./auto_pull.sh
+# # clone projects and config
+# RUN git config --global user.name ${GIT_USERNAME} && \
+#     git config --global user.email ${GIT_EMAIL} && \
+#     git clone git@e.coding.net:swjtuhelios/cv/autoaim_top_module.git --recursive && \
+#     mv autoaim_top_module src && cd src && \
+#     git submodule update --init --recursive && \
+#     chmod +x ./auto_push.sh && chmod +x ./auto_pull.sh && \
+#     ./auto_pull.sh
 
 # install dependencies and some tools
 RUN apt-get update && rosdep install --from-paths src --ignore-src -r -y && \
     apt-get install ros-humble-foxglove-bridge wget htop vim libceres-dev libpcl-ros-dev -y && \
     wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB && \
     apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB && \
+# install openvino, but we should not install it when in arm32/64
     echo "deb https://apt.repos.intel.com/openvino/2023 ubuntu22 main" | tee /etc/apt/sources.list.d/intel-openvino-2023.list && \
     apt-get update && apt install openvino-2023.2.0 -y && \
     rm -rf /var/lib/apt/lists/* 
