@@ -32,10 +32,10 @@ COPY . /autoaim_ws/src
 
 # install dependencies and some tools
 RUN apt-get update && rosdep install --from-paths src --ignore-src -r -y && \
-    apt-get install ros-humble-foxglove-bridge wget htop vim libceres-dev libpcl-ros-dev -y && \
-    wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB && \
-    apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB && \
+    apt-get install ros-humble-foxglove-bridge wget htop vim libceres-dev libpcl-ros-dev -y
 # install openvino, but we should not install it when in arm32/64
+RUN wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB && \
+    apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB && \
     echo "deb https://apt.repos.intel.com/openvino/2023 ubuntu22 main" | tee /etc/apt/sources.list.d/intel-openvino-2023.list && \
     apt-get update && apt install openvino-2023.2.0 -y && \
     rm -rf /var/lib/apt/lists/* 
