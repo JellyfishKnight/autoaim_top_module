@@ -2,7 +2,7 @@
 
 ## 快速部署
 
-### 手动部署
+### 手动部署(需要自己手动在主机上配置ssh-key)
 
     mkdir autoaim_ws && cd autoaim_ws && \
     git clone git@e.coding.net:swjtuhelios/cv/autoaim_top_module.git --recursive && \
@@ -12,11 +12,10 @@
 ### docker部署
 #### 容器构建
 
-注意：如果需要自己构建容器，需要先将需要部署的电脑上配置git-ssh，然后执行以下命令：
+注意：如果需要自己构建容器，执行以下命令：
     
-    cp ~/.ssh ~/autoaim_ws/ -r && \
-    cd ~/autoaim_ws && \
-    docker build --build-arg GIT_USERNAME=<USERNAME> --build-arg GIT_EMAIL=<YOUR_EMAIL> -t autoaim_deploy .
+    cd ~/autoaim_ws/src && \
+    docker build --build-arg ROS_DOAMIN_ID=<ID> -t autoaim_deploy .
 
 #### 直接部署命令
 

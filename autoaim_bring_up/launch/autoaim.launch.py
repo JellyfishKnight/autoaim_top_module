@@ -35,6 +35,7 @@ def generate_launch_description():
         output='both',
         emulate_tty=True,
         parameters=[node_params],
+        on_exit=Shutdown(),
         ros_arguments=['--log-level', 'predictor_node:='+launch_params['predictor_log_level']],
     )
 
