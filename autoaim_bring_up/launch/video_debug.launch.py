@@ -86,6 +86,6 @@ def generate_launch_description():
         tracker_node,
         node_tf2,
         autoaim_debugger,
-        foxglove_bridge,
+        # foxglove_bridge,
     ])
 
