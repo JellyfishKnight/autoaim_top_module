@@ -4,4 +4,9 @@
 .ssh
 */.ssh
 .ssh/*
-
+cache
+cache/*
+*/cache
+Camera
+Camera/*
+*/Camera
