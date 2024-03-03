@@ -79,6 +79,13 @@ def generate_launch_description():
         emulate_tty=True,
     )
 
+    camera_recorder = Node(
+        package='camera_recorder',
+        executable='camera_recorder_node',
+        name='camera_recorder_node',
+        output='both',
+        emulate_tty=True,
+    )
 
     return LaunchDescription([
         robot_state_publisher,
@@ -87,6 +94,7 @@ def generate_launch_description():
         tracker_node,
         node_tf2,
         autoaim_debugger,
-        foxglove_bridge,
+        camera_recorder,
+        # foxglove_bridge,
     ])
 

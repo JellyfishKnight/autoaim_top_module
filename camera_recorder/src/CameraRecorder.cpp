@@ -11,6 +11,7 @@
 #include <iostream>
 
 #include <rclcpp/rclcpp.hpp>
+#include <sensor_msgs/image_encodings.hpp>
 #include <sensor_msgs/msg/image.hpp>
 #include <cv_bridge/cv_bridge.h>
 
@@ -53,14 +54,16 @@ private:
   string save_root_;
   
   void CallBack(sensor_msgs::msg::Image::SharedPtr msg_ptr) {
-    img = cv_bridge::toCvShare(msg_ptr, "bgr8")->image.clone();
+    img = cv_bridge::toCvShare(msg_ptr, sensor_msgs::image_encodings::BGR8)->image.clone();
+    cv::imshow("DDDDD", img);
+    cv::waitKey(1);
     video_writer.write(img);
     tt = time(nullptr);
     localtime_r(&tt, &ttime);
     if((((ttime.tm_hour-time_start_hour)*60+ttime.tm_min-time_start_min)*60+(ttime.tm_sec - time_start_sec))>60){
       video_writer.release();
       strftime(now, 64, "%Y-%m-%d_%H_%M_S", &ttime);
-      video_writer = VideoWriter(format("%s/%s.avi", save_root_.c_str(), now), VideoWriter::fourcc('M', 'J', 'P', 'G'), 5.0, cv::Size(1280, 1024));
+      video_writer = VideoWriter(format("%s/%s.avi", save_root_.c_str(), now), VideoWriter::fourcc('D', 'I', 'V', 'X'), 50.0, cv::Size(1280, 1024));
       time_start_sec=ttime.tm_sec;
       time_start_min=ttime.tm_min;
       time_start_hour=ttime.tm_hour;
